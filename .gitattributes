@@ -1,2 +1,12 @@
 # Auto detect text files and perform LF normalization
-* text=auto
+
+# Auto-convert CRLF to LF on commit
+* text=auto eol=lf
+
+# Godot project files should always use LF
+*.gd text eol=lf
+*.tscn text eol=lf
+*.tres text eol=lf
+*.cfg text eol=lf
+*.import text eol=lf
+*.shader text eol=lf
