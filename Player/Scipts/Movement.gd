@@ -1,16 +1,19 @@
 class_name Player extends CharacterBody2D
 signal hit
 
+#prędkość gracza
 @export var speed = 400
 var screen_size
 
 func _ready():
 	screen_size = get_viewport_rect().size
-	
+
+#debug do funkcji przemieszczania się rybki
 func _process(delta):
 	if Input.is_action_pressed("move_right"):
 		print("Right key pressed")
-	
+
+#funkcja pozwala na ruch rybki za pomocą strzałek na klawiaturze
 func _physics_process(delta: float) -> void:
 	self.velocity = Vector2.ZERO
 	if Input.is_action_pressed("move_right"):
