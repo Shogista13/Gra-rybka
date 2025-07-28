@@ -16,6 +16,14 @@ func _input(event):
 var labirynty = [
 	preload("res://labirynty/labirynt1.tscn"),
 	preload("res://labirynty/labirynt2.tscn"),
+	preload("res://labirynty/labirynt3.tscn"),
+	preload("res://labirynty/labirynt4.tscn"),
+	preload("res://labirynty/labirynt5.tscn"),
+	preload("res://labirynty/labirynt6.tscn"),
+	preload("res://labirynty/labirynt7.tscn"),
+	preload("res://labirynty/labirynt8.tscn"),
+	preload("res://labirynty/labirynt9.tscn"),
+	preload("res://labirynty/labirynt10.tscn"),
 ]
 
 #pozycja, w której labirynty mają się pojawić
