@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=4 uid="uid://te60540beew0"]
+[gd_scene load_steps=11 format=4 uid="uid://te60540beew0"]
 
 [ext_resource type="PackedScene" uid="uid://s3sxrwwthpgc" path="res://Player/player.tscn" id="1_6hqob"]
 [ext_resource type="Script" uid="uid://c3nkl7ioubxdd" path="res://gra_rybka.gd" id="1_vbucm"]
 [ext_resource type="Texture2D" uid="uid://lfymb25foaio" path="res://tileset_0.1.png" id="3_gbs7g"]
 [ext_resource type="Texture2D" uid="uid://c4mct0g43ybuq" path="res://muszla_0.1.png" id="4_qexb3"]
+[ext_resource type="Script" uid="uid://cjhx4k56u4xw1" path="res://pytanie.gd" id="5_jt12g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h8215"]
 size = Vector2(45.5, 25)
@@ -38,6 +39,16 @@ scale = Vector2(0.5, 0.5)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(2, 2)
+
+[node name="Label" type="Label" parent="Player/Camera2D"]
+anchors_preset = -1
+offset_left = 600.0
+offset_top = -500.0
+offset_right = 640.0
+offset_bottom = -458.0
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 3
+vertical_alignment = 3
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Player"]
 position = Vector2(-0.75, 0)
@@ -95,3 +106,66 @@ texture = ExtResource("4_qexb3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Muszle/muszla4"]
 shape = SubResource("RectangleShape2D_jt12g")
+
+[node name="Pytanie" type="Window" parent="."]
+mode = 4
+initial_position = 2
+size = Vector2i(2000, 1200)
+script = ExtResource("5_jt12g")
+
+[node name="Button" type="Button" parent="Pytanie"]
+z_index = 1
+offset_left = 240.0
+offset_top = 1000.0
+offset_right = 440.0
+offset_bottom = 1100.0
+
+[node name="Button2" type="Button" parent="Pytanie"]
+z_index = 1
+offset_left = 680.0
+offset_top = 1000.0
+offset_right = 880.0
+offset_bottom = 1100.0
+
+[node name="Button3" type="Button" parent="Pytanie"]
+z_index = 1
+offset_left = 1120.0
+offset_top = 1000.0
+offset_right = 1320.0
+offset_bottom = 1100.0
+
+[node name="Button4" type="Button" parent="Pytanie"]
+z_index = 1
+offset_left = 1560.0
+offset_top = 1000.0
+offset_right = 1760.0
+offset_bottom = 1100.0
+
+[node name="Label" type="Label" parent="Pytanie"]
+z_index = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 100
+horizontal_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="Pytanie"]
+visible = false
+offset_right = 2000.0
+offset_bottom = 1200.0
+
+[connection signal="stop" from="." to="Player" method="_on_gra_rybka_stop"]
+[connection signal="body_entered" from="Muszle/muszla" to="." method="_on_pearl_collection"]
+[connection signal="body_entered" from="Muszle/muszla2" to="." method="_on_pearl_collection"]
+[connection signal="body_entered" from="Muszle/muszla3" to="." method="_on_pearl_collection"]
+[connection signal="body_entered" from="Muszle/muszla4" to="." method="_on_pearl_collection"]
+[connection signal="answer" from="Pytanie" to="." method="_on_pytanie_answer"]
+[connection signal="answer" from="Pytanie" to="Player" method="_on_pytanie_answer"]
+[connection signal="pressed" from="Pytanie/Button" to="Pytanie" method="_on_button_pressed"]
+[connection signal="pressed" from="Pytanie/Button2" to="Pytanie" method="_on_button_2_pressed"]
+[connection signal="pressed" from="Pytanie/Button3" to="Pytanie" method="_on_button_3_pressed"]
+[connection signal="pressed" from="Pytanie/Button4" to="Pytanie" method="_on_button_4_pressed"]
