@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 [gd_scene load_steps=17 format=4 uid="uid://te60540beew0"]
 
 [ext_resource type="PackedScene" uid="uid://s3sxrwwthpgc" path="res://Player/player.tscn" id="1_6hqob"]
@@ -7,6 +8,15 @@
 [ext_resource type="Texture2D" uid="uid://b7xpdxuuu5fjh" path="res://Map/Tiles/niebo.png" id="3_jt12g"]
 [ext_resource type="Texture2D" uid="uid://dl8dnaxn4vwys" path="res://Map/Tiles/woda.png" id="4_vbucm"]
 [ext_resource type="Texture2D" uid="uid://c8qnrxod8nhty" path="res://Map/Tiles/Perla.png" id="7_h8215"]
+=======
+[gd_scene load_steps=11 format=4 uid="uid://te60540beew0"]
+
+[ext_resource type="PackedScene" uid="uid://s3sxrwwthpgc" path="res://Player/player.tscn" id="1_6hqob"]
+[ext_resource type="Script" uid="uid://c3nkl7ioubxdd" path="res://gra_rybka.gd" id="1_vbucm"]
+[ext_resource type="Texture2D" uid="uid://lfymb25foaio" path="res://tileset_0.1.png" id="3_gbs7g"]
+[ext_resource type="Texture2D" uid="uid://c4mct0g43ybuq" path="res://muszla_0.1.png" id="4_qexb3"]
+[ext_resource type="Script" uid="uid://bm8ixumbs0ktf" path="res://pytanko.gd" id="6_vbucm"]
+>>>>>>> Stashed changes
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h8215"]
 size = Vector2(50, 28)
@@ -60,6 +70,13 @@ position = Vector2(996, 594)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 
+[node name="Label" type="Label" parent="Player/Camera2D"]
+offset_left = 800.0
+offset_top = -550.0
+offset_right = 1120.0
+offset_bottom = -366.0
+theme_override_font_sizes/font_size = 25
+
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Player"]
 shape = SubResource("RectangleShape2D_h8215")
 
@@ -84,6 +101,126 @@ tile_set = SubResource("TileSet_dwps7")
 
 [node name="Collisions" type="StaticBody2D" parent="."]
 
+<<<<<<< Updated upstream
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions"]
 position = Vector2(0, -1)
 polygon = PackedVector2Array(2, 297, 1999, 298, 2000, 1200, -1, 1200, -1, 6, -123, 14, -114, 1426, 2191, 1438, 2136, -207, -124, -131, -124, 2)
+=======
+[node name="muszla" type="Area2D" parent="Muszle"]
+position = Vector2(-1856, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Muszle/muszla"]
+shape = SubResource("RectangleShape2D_jt12g")
+
+[node name="Sprite2D" type="Sprite2D" parent="Muszle/muszla"]
+texture = ExtResource("4_qexb3")
+
+[node name="muszla2" type="Area2D" parent="Muszle"]
+position = Vector2(-1184, 672)
+
+[node name="Sprite2D" type="Sprite2D" parent="Muszle/muszla2"]
+texture = ExtResource("4_qexb3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Muszle/muszla2"]
+shape = SubResource("RectangleShape2D_jt12g")
+
+[node name="muszla3" type="Area2D" parent="Muszle"]
+position = Vector2(-736, 672)
+
+[node name="Sprite2D" type="Sprite2D" parent="Muszle/muszla3"]
+texture = ExtResource("4_qexb3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Muszle/muszla3"]
+shape = SubResource("RectangleShape2D_jt12g")
+
+[node name="muszla4" type="Area2D" parent="Muszle"]
+position = Vector2(-63, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Muszle/muszla4"]
+texture = ExtResource("4_qexb3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Muszle/muszla4"]
+shape = SubResource("RectangleShape2D_jt12g")
+
+[node name="Pytanie" type="Window" parent="."]
+mode = 4
+initial_position = 2
+size = Vector2i(2000, 1200)
+script = ExtResource("6_vbucm")
+
+[node name="Background" type="ColorRect" parent="Pytanie"]
+z_index = -1
+layout_direction = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1000.0
+offset_top = -600.0
+offset_right = 1000.0
+offset_bottom = 600.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Pytanie"]
+modulate = Color(0, 0.747992, 0.748391, 1)
+self_modulate = Color(0.900689, 0.507975, 0.949468, 1)
+top_level = true
+z_index = 1
+offset_left = 1000.0
+offset_top = 100.0
+offset_right = 1028.0
+offset_bottom = 123.0
+text = "PYTANIE"
+horizontal_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="Pytanie"]
+offset_left = 240.0
+offset_top = 1000.0
+offset_right = 440.0
+offset_bottom = 1100.0
+text = "a"
+vertical_icon_alignment = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="Button2" type="Button" parent="Pytanie"]
+offset_left = 680.0
+offset_top = 1000.0
+offset_right = 880.0
+offset_bottom = 1100.0
+text = "b"
+metadata/_edit_use_anchors_ = true
+
+[node name="Button3" type="Button" parent="Pytanie"]
+offset_left = 1120.0
+offset_top = 1000.0
+offset_right = 1320.0
+offset_bottom = 1100.0
+text = "c"
+metadata/_edit_use_anchors_ = true
+
+[node name="Button4" type="Button" parent="Pytanie"]
+offset_left = 1560.0
+offset_top = 1000.0
+offset_right = 1760.0
+offset_bottom = 1100.0
+text = "d"
+metadata/_edit_use_anchors_ = true
+
+[connection signal="stop" from="." to="Player" method="_on_gra_rybka_stop"]
+[connection signal="body_entered" from="Muszle/muszla" to="." method="_on_pearl_collection"]
+[connection signal="body_entered" from="Muszle/muszla2" to="." method="_on_pearl_collection"]
+[connection signal="body_entered" from="Muszle/muszla3" to="." method="_on_pearl_collection"]
+[connection signal="body_entered" from="Muszle/muszla4" to="." method="_on_pearl_collection"]
+[connection signal="answer" from="Pytanie" to="." method="_on_pytanie_answer"]
+[connection signal="answer" from="Pytanie" to="Player" method="_on_pytanie_answer"]
+[connection signal="pressed" from="Pytanie/Button" to="Pytanie" method="_on_button_pressed"]
+[connection signal="pressed" from="Pytanie/Button2" to="Pytanie" method="_on_button_2_pressed"]
+[connection signal="pressed" from="Pytanie/Button3" to="Pytanie" method="_on_button_3_pressed"]
+[connection signal="pressed" from="Pytanie/Button4" to="Pytanie" method="_on_button_4_pressed"]
+>>>>>>> Stashed changes

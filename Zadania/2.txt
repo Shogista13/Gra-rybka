@@ -1,0 +1,6 @@
+Ala ma kota, a Andrzej ma psa. Oblicz mase Słońca:
+1
+2
+3
+4
+3
