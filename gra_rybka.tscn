@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://cjhx4k56u4xw1" path="res://pytanie.gd" id="5_jt12g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h8215"]
-size = Vector2(45.5, 25)
+size = Vector2(26, 24.5)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qexb3"]
 texture = ExtResource("3_gbs7g")
@@ -39,6 +39,9 @@ scale = Vector2(0.5, 0.5)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(2, 2)
+process_callback = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 7.0
 
 [node name="Label" type="Label" parent="Player/Camera2D"]
 offset_left = 600.0
@@ -50,7 +53,7 @@ horizontal_alignment = 3
 vertical_alignment = 3
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Player"]
-position = Vector2(-0.75, 0)
+position = Vector2(-5, -0.25)
 shape = SubResource("RectangleShape2D_h8215")
 
 [node name="Mapa" type="Node2D" parent="."]
@@ -110,6 +113,7 @@ shape = SubResource("RectangleShape2D_jt12g")
 mode = 4
 initial_position = 2
 size = Vector2i(2000, 1200)
+visible = false
 script = ExtResource("5_jt12g")
 
 [node name="Button" type="Button" parent="Pytanie"]
