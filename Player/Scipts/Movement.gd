@@ -8,7 +8,7 @@ func _ready():
 	screen_size = get_viewport_rect().size
 	
 #funkcja pozwala na ruch rybki za pomocą strzałek na klawiaturze
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if state == "rybka":
 		self.velocity = Vector2.ZERO
 		if Input.is_action_pressed("move_right"):
@@ -30,7 +30,7 @@ func _physics_process(delta: float) -> void:
 				$AnimatedSprite2D.flip_h = true
 	move_and_slide()
 
-func _on_pytanie_answer(point: Variant) -> void:
+func _on_pytanie_answer(_point: Variant) -> void:
 	state = "rybka"
 
 func _on_gra_rybka_stop() -> void:
