@@ -3,6 +3,7 @@ extends Node2D
 @onready var start_screen = $Start
 @onready var pytanko = $Pytanie
 
+var initialized = false
 signal stop
 var points = 0
 var HP = 3
@@ -37,33 +38,51 @@ const MAZE_TILES = 28
 
 #BŁAGAM NIE DOTYKAĆ TEJ FUNKCJI, BO CAŁĄ NIEDZIELĘ WALCZYŁEM Z OBROTEM LABIRYNTÓW
 #I I TAK OSTATECZNIE MUSIAŁEM ICH POZYCJĘ ZAKODOWAĆ NA TWARDO
+var aktywnosc_perel = [true,true,true,true]
+var instancje_labiryntow = []
+@onready var muszle = [$Muszle/muszla,$Muszle/muszla2,$Muszle/muszla3,$Muszle/muszla4]
+
 func generuj_labirynty():
 	var rozmiar_labiryntu_px = TILE_SIZE*MAZE_TILES
 	
 	for i in siatka_pozycji.size():
-		var grid_pos = siatka_pozycji[i]
-		var base_pos = Vector2(grid_pos.x*rozmiar_labiryntu_px, grid_pos.y*rozmiar_labiryntu_px)
+		if not aktywnosc_perel[i] or not initialized:
+			var grid_pos = siatka_pozycji[i]
+			var base_pos = Vector2(grid_pos.x*rozmiar_labiryntu_px, grid_pos.y*rozmiar_labiryntu_px)
+			
+			var losowy_index = randi() % labirynty.size()
+			var labirynt_scene = labirynty[losowy_index]
+			var instancja = labirynt_scene.instantiate()
+			
+			var rotation_deg = 0
+			if grid_pos == Vector2i(1, 1) or grid_pos == Vector2i(2, 1):
+				rotation_deg = 270
+			
+			instancja.rotation_degrees = rotation_deg
+			
+			var offset = Vector2.ZERO
+			match rotation_deg:
+				270:
+					offset = Vector2(80-rozmiar_labiryntu_px, 944)
+			instancja.position = base_pos + offset
+			if not muszle[i].is_connected("body_entered",_on_pearl_collection):
+				for instance in instancje_labiryntow:
+					if instance.position == base_pos + offset:
+						instance.queue_free()
+						instancje_labiryntow.erase(instance)
+			
+			instancje_labiryntow.append(instancja)
+			add_child(instancja)
+			
+			if not muszle[i].is_connected("body_entered",_on_pearl_collection):
+				muszle[i].connect("body_entered",_on_pearl_collection)
+				var muszla_sprite = muszle[i].get_node("Sprite2D")
+				muszla_sprite.show()
+				aktywnosc_perel[i] = true
+				
 		
-		var losowy_index = randi() % labirynty.size()
-		var labirynt_scene = labirynty[losowy_index]
-		var instancja = labirynt_scene.instantiate()
-		
-		var rotation_deg = 0
-		if grid_pos == Vector2i(1, 1) or grid_pos == Vector2i(2, 1):
-			rotation_deg = 270
-		
-		instancja.rotation_degrees = rotation_deg
-		
-		var offset = Vector2.ZERO
-		match rotation_deg:
-			270:
-				offset = Vector2(80-rozmiar_labiryntu_px, 944)
-		instancja.position = base_pos + offset
-		add_child(instancja)
 
-var initialized = false
 const base_path = "res://Zadania/"
-var path
 const zadanie_klasa = preload("res://Class_zadanie.gd")
 
 var zadania = []
@@ -71,21 +90,32 @@ var zadania = []
 func wybierz_zadania():
 	var klasa = $Start/VBoxContainer/Level.text
 	var temat = $Start/VBoxContainer/Topic.text
-	path = base_path+klasa+"/"
 	if temat != "wszystko":
-		path+=temat+"/"
+		return [base_path+klasa+"/"+temat+"/"]
+	else:
+		var dir = DirAccess.open(base_path+klasa+"/")
+		var paths = []
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			paths.append(base_path+klasa+"/"+file_name+"/")
+			file_name = dir.get_next()
+		dir.list_dir_end()
+		return paths
 
 func generuj_zadania():
-	wybierz_zadania()
-	var dir = DirAccess.open(path)
-	var zadanie
-	dir.list_dir_begin()
-	var file_name = dir.get_next()
-	while file_name != "":
-		var file = FileAccess.open(path+file_name, FileAccess.READ).get_as_text().split("\n")
-		zadanie = zadanie_klasa.new(file[0],file.slice(1,-2),file[-2])
-		zadania.append(zadanie)
-		file_name = dir.get_next()
+	var path = wybierz_zadania()
+	for i in path:
+		var dir = DirAccess.open(i)
+		var zadanie
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			var file = FileAccess.open(i+file_name, FileAccess.READ).get_as_text().split("\n")
+			zadanie = zadanie_klasa.new(file[0],file.slice(1,-2),file[-2])
+			zadania.append(zadanie)
+			file_name = dir.get_next()
+		dir.list_dir_end()
 
 func _ready():
 	start_screen.show()
@@ -112,66 +142,34 @@ func _on_pearl_collection(body: Node2D) -> void:
 			generuj_zadania()
 		pytanko.ustaw_scene(task)
 		pytanko.show()
-		generuj_labirynty()
 
 func _on_muszla_body_entered(body: Node2D) -> void:
 	if initialized:
+		generuj_labirynty()
 		$Muszle/muszla.disconnect("body_entered",_on_pearl_collection)
 		$Muszle/muszla/Sprite2D.hide()
-		if not $Muszle/muszla2/Sprite2D.is_connected("body entered",_on_pearl_collection):
-			$Muszle/muszla2.connect("body_entered",_on_pearl_collection)
-			$Muszle/muszla2/Sprite2D.show()
-		if not $Muszle/muszla3/Sprite2D.is_connected("body entered",_on_pearl_collection):
-			$Muszle/muszla3.connect("body_entered",_on_pearl_collection)
-			$Muszle/muszla3/Sprite2D.show()
-		if not $Muszle/muszla4/Sprite2D.is_connected("body entered",_on_pearl_collection):
-			$Muszle/muszla4.connect("body_entered",_on_pearl_collection)
-			$Muszle/muszla4/Sprite2D.show()
-			
+		aktywnosc_perel[0] = false
 
 func _on_muszla_2_body_entered(body: Node2D) -> void:
 	if initialized:
+		generuj_labirynty()
 		$Muszle/muszla2.disconnect("body_entered",_on_pearl_collection)
 		$Muszle/muszla2/Sprite2D.hide()
-		if not $Muszle/muszla/Sprite2D.is_connected("body entered",_on_pearl_collection):
-			$Muszle/muszla.connect("body_entered",_on_pearl_collection)
-			$Muszle/muszla/Sprite2D.show()
-		if not $Muszle/muszla3/Sprite2D.is_connected("body entered",_on_pearl_collection):
-			$Muszle/muszla3.connect("body_entered",_on_pearl_collection)
-			$Muszle/muszla3/Sprite2D.show()
-		if not $Muszle/muszla4/Sprite2D.is_connected("body entered",_on_pearl_collection):
-			$Muszle/muszla4.connect("body_entered",_on_pearl_collection)
-			$Muszle/muszla4/Sprite2D.show()
-			
+		aktywnosc_perel[1] = false
 
 func _on_muszla_3_body_entered(body: Node2D) -> void:
 	if initialized:
+		generuj_labirynty()
 		$Muszle/muszla3.disconnect("body_entered",_on_pearl_collection)
 		$Muszle/muszla3/Sprite2D.hide()
-		if not $Muszle/muszla/Sprite2D.is_connected("body entered",_on_pearl_collection):
-			$Muszle/muszla.connect("body_entered",_on_pearl_collection)
-			$Muszle/muszla/Sprite2D.show()
-		if not $Muszle/muszla2/Sprite2D.is_connected("body entered",_on_pearl_collection):
-			$Muszle/muszla2.connect("body_entered",_on_pearl_collection)
-			$Muszle/muszla2/Sprite2D.show()
-		if not $Muszle/muszla4/Sprite2D.is_connected("body entered",_on_pearl_collection):
-			$Muszle/muszla4.connect("body_entered",_on_pearl_collection)
-			$Muszle/muszla4/Sprite2D.show()
+		aktywnosc_perel[2] = false
 
 func _on_muszla_4_body_entered(body: Node2D) -> void:
 	if initialized:
+		generuj_labirynty()
 		$Muszle/muszla4.disconnect("body_entered",_on_pearl_collection)
 		$Muszle/muszla4/Sprite2D.hide()
-		if not $Muszle/muszla/Sprite2D.is_connected("body entered",_on_pearl_collection):
-			$Muszle/muszla.connect("body_entered",_on_pearl_collection)
-			$Muszle/muszla/Sprite2D.show()
-		if not $Muszle/muszla2/Sprite2D.is_connected("body entered",_on_pearl_collection):
-			$Muszle/muszla2.connect("body_entered",_on_pearl_collection)
-			$Muszle/muszla2/Sprite2D.show()
-		if not $Muszle/muszla3/Sprite2D.is_connected("body entered",_on_pearl_collection):
-			$Muszle/muszla3.connect("body_entered",_on_pearl_collection)
-			$Muszle/muszla3/Sprite2D.show()
-
+		aktywnosc_perel[3] = false
 
 func _on_pytanie_answer(point):
 	if point == 1:

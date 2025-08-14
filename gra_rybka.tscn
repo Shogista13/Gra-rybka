@@ -214,14 +214,14 @@ mouse_filter = 2
 color = Color(0.137255, 1, 1, 1)
 
 [connection signal="stop" from="." to="Player" method="_on_gra_rybka_stop"]
-[connection signal="body_entered" from="Muszle/muszla" to="." method="_on_muszla_body_entered"]
 [connection signal="body_entered" from="Muszle/muszla" to="." method="_on_pearl_collection"]
+[connection signal="body_entered" from="Muszle/muszla" to="." method="_on_muszla_body_entered"]
 [connection signal="body_entered" from="Muszle/muszla2" to="." method="_on_pearl_collection"]
 [connection signal="body_entered" from="Muszle/muszla2" to="." method="_on_muszla_2_body_entered"]
-[connection signal="body_entered" from="Muszle/muszla3" to="." method="_on_pearl_collection"]
 [connection signal="body_entered" from="Muszle/muszla3" to="." method="_on_muszla_3_body_entered"]
-[connection signal="body_entered" from="Muszle/muszla4" to="." method="_on_muszla_4_body_entered"]
+[connection signal="body_entered" from="Muszle/muszla3" to="." method="_on_pearl_collection"]
 [connection signal="body_entered" from="Muszle/muszla4" to="." method="_on_pearl_collection"]
+[connection signal="body_entered" from="Muszle/muszla4" to="." method="_on_muszla_4_body_entered"]
 [connection signal="answer" from="Pytanie" to="." method="_on_pytanie_answer"]
 [connection signal="answer" from="Pytanie" to="Player" method="_on_pytanie_answer"]
 [connection signal="pressed" from="Pytanie/Button" to="Pytanie" method="_on_button_pressed"]
