@@ -56,13 +56,29 @@ func generuj_odpowiedzi(answer:String,liczby:Array):
 			while odpowiedzi.has(correct_answer+error) or error == 0:
 				error = randi() % 8 - 4
 			odpowiedzi.append(str(correct_answer+error))
-	return [odpowiedzi,index]
+	return [odpowiedzi,str(index)]
+
+func czytaj_odpowiedzi(lista_odpowiedzi):
+	var rozdzielone = lista_odpowiedzi.split("_")
+	return [rozdzielone.slice(1),rozdzielone[0]]
+
+func czytaj_tresc(tresc):
+	var poprzedni_enter = 0
+	for i in range(len(tresc)):
+		if i - poprzedni_enter > 20 and tresc[i] == " ":
+			poprzedni_enter = i
+			tresc = tresc.erase(i,1)
+			tresc = tresc.insert(i,'\n')
+	return tresc
+	
 
 func _init(tresc_zadanka: String,zakresy:PackedStringArray,odpowiedz: String):
 	self.zakresy = czytaj_zakresy(zakresy)
 	var results = generuj_losowe_liczby(tresc_zadanka,self.zakresy)
-	self.tresc_zadanka = results[0]
-	results = generuj_odpowiedzi(odpowiedz,results[1])
+	self.tresc_zadanka = czytaj_tresc(results[0])
+	if self.zakresy:
+		results = generuj_odpowiedzi(odpowiedz,results[1])
+	else:
+		results = czytaj_odpowiedzi(odpowiedz)
 	self.odpowiedzi = results[0]
-	self.poprawna = str(results[1])
-	
+	self.poprawna = results[1]
