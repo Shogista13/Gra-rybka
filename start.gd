@@ -7,7 +7,7 @@ extends Window
 
 const levels = {
 	"klasa 1":["dodawanie","mnożenie"],
-	"klasa 2":["geometria","dzielenie"]
+	"klasa 2":["geometria","odejmowanie"]
 }
 
 var dict_keys = levels.keys()
