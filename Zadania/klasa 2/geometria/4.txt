@@ -1,0 +1,2 @@
+Oblicz pole trójkąta prostokątnego o bokach 3 cm, 4 cm i 5 cm.
+2_3_5_6_8

@@ -13,28 +13,24 @@ func ustaw_scene(zadanie):
 	$Button4.set_text(zadanie.odpowiedzi[3])
 
 func _on_button_pressed() -> void:
-	print(zadanko.poprawna)
 	if zadanko.poprawna == str(0):
 		answer.emit(1)
 	else:
 		answer.emit(0)
 
 func _on_button_2_pressed() -> void:
-	print(zadanko.poprawna)
 	if zadanko.poprawna == str(1):
 		answer.emit(1)
 	else:
 		answer.emit(0)
 
 func _on_button_3_pressed() -> void:
-	print(zadanko.poprawna)
 	if zadanko.poprawna == str(2):
 		answer.emit(1)
 	else:
 		answer.emit(0)
 
 func _on_button_4_pressed() -> void:
-	print(zadanko.poprawna)
 	if zadanko.poprawna == str(3):
 		answer.emit(1)
 	else:
