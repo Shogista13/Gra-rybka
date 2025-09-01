@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://te60540beew0"]
+[gd_scene load_steps=14 format=4 uid="uid://te60540beew0"]
 
 [ext_resource type="PackedScene" uid="uid://s3sxrwwthpgc" path="res://Player/player.tscn" id="1_6hqob"]
 [ext_resource type="Script" uid="uid://c3nkl7ioubxdd" path="res://gra_rybka.gd" id="1_vbucm"]
@@ -30,6 +30,10 @@ distance = -3.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jt12g"]
 size = Vector2(32, 32)
+
+[sub_resource type="GDScript" id="GDScript_h8215"]
+script/source = "extends Window
+"
 
 [node name="Gra rybka" type="Node2D"]
 script = ExtResource("1_vbucm")
@@ -117,6 +121,7 @@ mode = 4
 initial_position = 2
 size = Vector2i(2000, 1200)
 visible = false
+theme = ExtResource("3_h8215")
 script = ExtResource("5_jt12g")
 
 [node name="Button" type="Button" parent="Pytanie"]
@@ -216,11 +221,67 @@ offset_bottom = 40.0
 mouse_filter = 2
 color = Color(0.137255, 1, 1, 1)
 
+[node name="Przegrana" type="Window" parent="."]
+mode = 4
+initial_position = 2
+size = Vector2i(2000, 1200)
+theme = ExtResource("3_h8215")
+script = SubResource("GDScript_h8215")
+
+[node name="ColorRect" type="ColorRect" parent="Przegrana"]
+z_index = -1
+custom_minimum_size = Vector2(2000, 1200)
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+color = Color(0.137255, 1, 1, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Przegrana"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -171.5
+offset_top = -90.5
+offset_right = 171.5
+offset_bottom = 90.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VSplitContainer2" type="VSplitContainer" parent="Przegrana/VBoxContainer"]
+layout_mode = 2
+split_offset = 200
+
+[node name="VSplitContainer" type="VSplitContainer" parent="Przegrana/VBoxContainer/VSplitContainer2"]
+layout_mode = 2
+split_offset = 200
+
+[node name="Label" type="Label" parent="Przegrana/VBoxContainer/VSplitContainer2/VSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 100
+text = "Przegrałeś/aś"
+
+[node name="Punkty" type="Label" parent="Przegrana/VBoxContainer/VSplitContainer2/VSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 100
+
+[node name="Play_again" type="Button" parent="Przegrana/VBoxContainer/VSplitContainer2"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Zagraj jeszcze raz"
+
+[connection signal="play_again" from="." to="Player" method="_on_gra_rybka_play_again"]
 [connection signal="stop" from="." to="Player" method="_on_gra_rybka_stop"]
-[connection signal="body_entered" from="Muszle/muszla" to="." method="_on_muszla_body_entered"]
 [connection signal="body_entered" from="Muszle/muszla" to="." method="_on_pearl_collection"]
-[connection signal="body_entered" from="Muszle/muszla2" to="." method="_on_muszla_2_body_entered"]
+[connection signal="body_entered" from="Muszle/muszla" to="." method="_on_muszla_body_entered"]
 [connection signal="body_entered" from="Muszle/muszla2" to="." method="_on_pearl_collection"]
+[connection signal="body_entered" from="Muszle/muszla2" to="." method="_on_muszla_2_body_entered"]
 [connection signal="body_entered" from="Muszle/muszla3" to="." method="_on_pearl_collection"]
 [connection signal="body_entered" from="Muszle/muszla3" to="." method="_on_muszla_3_body_entered"]
 [connection signal="body_entered" from="Muszle/muszla4" to="." method="_on_pearl_collection"]
@@ -234,3 +295,4 @@ color = Color(0.137255, 1, 1, 1)
 [connection signal="pressed" from="Start/VBoxContainer/Start" to="." method="_on_start_pressed"]
 [connection signal="item_selected" from="Start/VBoxContainer/Level" to="Start" method="_on_level_item_selected"]
 [connection signal="pressed" from="Start/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="Przegrana/VBoxContainer/VSplitContainer2/Play_again" to="." method="_on_play_again_pressed"]

@@ -35,3 +35,6 @@ func _on_pytanie_answer(_point: Variant) -> void:
 
 func _on_gra_rybka_stop() -> void:
 	state = "nie rybka"
+
+func _on_gra_rybka_play_again() -> void:
+	position = Vector2(1000,600)

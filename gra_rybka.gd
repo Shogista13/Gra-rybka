@@ -2,9 +2,11 @@ extends Node2D
 
 @onready var start_screen = $Start
 @onready var pytanko = $Pytanie
+@onready var game_over = $Przegrana
 
 var initialized = false
 signal stop
+signal play_again
 var points = 0
 var HP = 3
 
@@ -119,6 +121,7 @@ func generuj_zadania():
 
 func _ready():
 	start_screen.show()
+	game_over.hide()
 	
 func _on_start_pressed() -> void:
 	start_screen.hide()
@@ -174,10 +177,25 @@ func _on_muszla_4_body_entered(body: Node2D) -> void:
 func _on_pytanie_answer(point):
 	if point == 1:
 		points += 1
+		if points % 3 == 0:
+			HP += 1
 	else:
 		HP -= 1
+		if HP == 0:
+			przegrana()
 	pytanko.hide()
 	$Player/Camera2D/Label.set_text("Points: "+str(points)+" HP: "+str(HP))
 
 func _on_add_exercises_pressed() -> void:
 	start_screen.hide()
+
+func przegrana():
+	$Przegrana/VBoxContainer/VSplitContainer2/VSplitContainer/Punkty.set_text("Punkty " + str(points))
+	game_over.show()
+	stop.emit()
+
+func _on_play_again_pressed() -> void:
+	points = 0
+	HP = 3
+	play_again.emit()
+	game_over.hide()
