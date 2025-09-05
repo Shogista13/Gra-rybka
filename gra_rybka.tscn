@@ -391,7 +391,67 @@ stream = ExtResource("11_f8ouj")
 autoplay = true
 bus = &"Music"
 
+[node name="Pause" type="Window" parent="."]
+auto_translate_mode = 1
+mode = 4
+initial_position = 2
+size = Vector2i(2000, 1200)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Pause"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -212.0
+offset_right = 200.0
+offset_bottom = 320.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_h8215")
+alignment = 1
+
+[node name="Punkty" type="Label" parent="Pause/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 100
+horizontal_alignment = 1
+
+[node name="Continue" type="Button" parent="Pause/VBoxContainer"]
+custom_minimum_size = Vector2(400, 200)
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("3_h8215")
+theme_override_font_sizes/font_size = 100
+text = "Kontynuuj"
+
+[node name="Settings" type="Button" parent="Pause/VBoxContainer"]
+custom_minimum_size = Vector2(400, 200)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 100
+text = "Ustawienia"
+
+[node name="Quit" type="Button" parent="Pause/VBoxContainer"]
+custom_minimum_size = Vector2(400, 200)
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("3_h8215")
+theme_override_font_sizes/font_size = 100
+text = "Wyjdź"
+
+[node name="ColorRect" type="ColorRect" parent="Pause"]
+z_index = -1
+custom_minimum_size = Vector2(2000, 1200)
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+color = Color(0.137255, 1, 1, 1)
+
 [connection signal="play_again" from="." to="Player" method="_on_gra_rybka_play_again"]
+[connection signal="start_or_pause" from="." to="Settings" method="_on_gra_rybka_start_or_pause"]
 [connection signal="stop" from="." to="Player" method="_on_gra_rybka_stop"]
 [connection signal="body_entered" from="Muszle/muszla" to="." method="_on_pearl_collection"]
 [connection signal="body_entered" from="Muszle/muszla" to="." method="_on_muszla_body_entered"]
@@ -414,3 +474,7 @@ bus = &"Music"
 [connection signal="value_changed" from="Settings/VBoxContainer/music control" to="Settings/VBoxContainer/music control" method="_on_value_changed"]
 [connection signal="pressed" from="Settings/Return" to="Settings" method="_on_return_pressed"]
 [connection signal="pressed" from="Przegrana/VBoxContainer/VSplitContainer2/Play_again" to="." method="_on_play_again_pressed"]
+[connection signal="pressed" from="Pause/VBoxContainer/Continue" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="Pause/VBoxContainer/Continue" to="Player" method="_on_continue_pressed"]
+[connection signal="pressed" from="Pause/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="Pause/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

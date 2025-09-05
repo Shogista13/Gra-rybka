@@ -5,6 +5,7 @@ var odpowiedzi: PackedStringArray
 var poprawna: String
 var zakresy
 var tresc_zadanka: String
+var specjalna: bool
 
 func generuj_losowe_liczby(tresc_zadania,odczytane_zakresy):
 	var tresc = tresc_zadania.split("_")
@@ -82,3 +83,4 @@ func _init(tresc_zadanka: String,zakresy:PackedStringArray,odpowiedz: String):
 		results = czytaj_odpowiedzi(odpowiedz)
 	self.odpowiedzi = results[0]
 	self.poprawna = results[1]
+	self.specjalna = randi() % 5 == 0

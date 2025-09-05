@@ -4,18 +4,22 @@ extends Node2D
 @onready var settings_screen = $Settings
 @onready var pytanko = $Pytanie
 @onready var game_over = $Przegrana
+@onready var pause = $Pause
 
 var initialized = false
 signal stop
 signal play_again
 var points = 0
 var HP = 3
+signal start_or_pause
 
 #kliknięcie ESC wyłącza grę >>> może lepiej bedie jak na esc się włączy menu z którego dopiero można wyłączyć gre
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
-		start_screen.show()
-		#get_tree().quit()
+		$Pause/VBoxContainer/Punkty.set_text("HP: "+str(HP)+"\nPunkty: "+str(points)) 
+		pause.show()
+		start_or_pause.emit()
+		stop.emit()
 
 #losowa generacja labiryntów
 
@@ -125,6 +129,7 @@ func _ready():
 	start_screen.show()
 	settings_screen.hide()
 	game_over.hide()
+	pause.hide()
 	
 func _on_start_pressed() -> void:
 	start_screen.hide()
@@ -135,6 +140,9 @@ func _on_start_pressed() -> void:
 	pytanko.hide()
 	$Player/Camera2D/Label.set_text("Punkty: "+str(points)+" HP: "+str(HP))
 	initialized = true
+
+func _on_continue_pressed() -> void:
+	pause.hide()
 
 func _on_settings_pressed() -> void:
 	start_screen.hide()
@@ -181,8 +189,11 @@ func _on_muszla_4_body_entered(body: Node2D) -> void:
 		$Muszle/muszla4/Sprite2D.hide()
 		aktywnosc_perel[3] = false
 
-func _on_pytanie_answer(point):
-	if point == 1:
+func _on_pytanie_answer(point,shiny):
+	if point == 1 and shiny:
+		points += 3
+		HP += 1
+	elif point == 1:
 		points += 1
 		if points % 3 == 0:
 			HP += 1
@@ -192,9 +203,6 @@ func _on_pytanie_answer(point):
 			przegrana()
 	pytanko.hide()
 	$Player/Camera2D/Label.set_text("Points: "+str(points)+" HP: "+str(HP))
-
-func _on_add_exercises_pressed() -> void:
-	start_screen.hide()
 
 func przegrana():
 	$Przegrana/VBoxContainer/VSplitContainer2/VSplitContainer/Punkty.set_text("Punkty " + str(points))
