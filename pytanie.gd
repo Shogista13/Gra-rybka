@@ -14,24 +14,24 @@ func ustaw_scene(zadanie):
 
 func _on_button_pressed() -> void:
 	if zadanko.poprawna == str(0):
-		answer.emit(1)
+		answer.emit(1,zadanko.specjalna)
 	else:
-		answer.emit(0)
+		answer.emit(0,zadanko.specjalna)
 
 func _on_button_2_pressed() -> void:
 	if zadanko.poprawna == str(1):
-		answer.emit(1)
+		answer.emit(1,zadanko.specjalna)
 	else:
-		answer.emit(0)
+		answer.emit(0,zadanko.specjalna)
 
 func _on_button_3_pressed() -> void:
 	if zadanko.poprawna == str(2):
-		answer.emit(1)
+		answer.emit(1,zadanko.specjalna)
 	else:
-		answer.emit(0)
+		answer.emit(0,zadanko.specjalna)
 
 func _on_button_4_pressed() -> void:
 	if zadanko.poprawna == str(3):
-		answer.emit(1)
+		answer.emit(1,zadanko.specjalna)
 	else:
-		answer.emit(0)
+		answer.emit(0,zadanko.specjalna)

@@ -12,7 +12,6 @@ const levels = {
 }
 
 var dict_keys = levels.keys()
-
 var button_color = "#c8c800" 
 
 func _ready() -> void:

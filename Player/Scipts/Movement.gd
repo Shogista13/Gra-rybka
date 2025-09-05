@@ -30,7 +30,7 @@ func _physics_process(_delta: float) -> void:
 				$AnimatedSprite2D.flip_h = true
 	move_and_slide()
 
-func _on_pytanie_answer(_point: Variant) -> void:
+func _on_pytanie_answer(point,shiny) -> void:
 	state = "rybka"
 
 func _on_gra_rybka_stop() -> void:
@@ -38,3 +38,6 @@ func _on_gra_rybka_stop() -> void:
 
 func _on_gra_rybka_play_again() -> void:
 	position = Vector2(1000,600)
+
+func _on_continue_pressed() -> void:
+	state = "rybka"
