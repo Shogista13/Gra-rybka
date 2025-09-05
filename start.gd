@@ -3,6 +3,7 @@ extends Window
 @onready var start_button = $VBoxContainer/Start
 @onready var choose_level = $VBoxContainer/Level
 @onready var choose_topic = $VBoxContainer/Topic
+@onready var settings_button = $VBoxContainer/Settings
 @onready var quit_button = $VBoxContainer/Quit
 
 const levels = {
@@ -22,6 +23,7 @@ func _ready() -> void:
 	choose_level.allow_reselect = true
 	choose_topic.allow_reselect = true
 	start_button.set_text("Zacznij grę")
+	settings_button.set_text("Ustawienia")
 	quit_button.set_text("Wyjdź")
 	var style = start_button.get_theme_stylebox("normal")
 	style.bg_color = button_color

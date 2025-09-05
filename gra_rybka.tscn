@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://te60540beew0"]
+[gd_scene load_steps=21 format=4 uid="uid://te60540beew0"]
 
 [ext_resource type="PackedScene" uid="uid://s3sxrwwthpgc" path="res://Player/player.tscn" id="1_6hqob"]
 [ext_resource type="Script" uid="uid://c3nkl7ioubxdd" path="res://gra_rybka.gd" id="1_vbucm"]
@@ -7,6 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://c4mct0g43ybuq" path="res://muszla_0.1.png" id="4_qexb3"]
 [ext_resource type="Script" uid="uid://cjhx4k56u4xw1" path="res://pytanie.gd" id="5_jt12g"]
 [ext_resource type="Script" uid="uid://i83jvl8rqc0" path="res://start.gd" id="6_vbucm"]
+[ext_resource type="Script" uid="uid://vmdcxkcmep3w" path="res://settings.gd" id="8_dwps7"]
+[ext_resource type="Texture2D" uid="uid://bppa17fpruev4" path="res://slider-pixilart.png" id="8_gc71u"]
+[ext_resource type="Script" uid="uid://bqpluxki8lmpc" path="res://music_control.gd" id="10_lb4fb"]
+[ext_resource type="AudioStream" uid="uid://b5yi054npa3xv" path="res://just-relax-11157.mp3" id="11_f8ouj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h8215"]
 size = Vector2(26, 24.5)
@@ -30,6 +34,22 @@ distance = -3.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jt12g"]
 size = Vector2(32, 32)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_llcym"]
+color = Color(0.0513334, 0, 0.28, 0.392157)
+grow_begin = -15.0
+grow_end = -15.0
+thickness = 27
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_bkvsw"]
+color = Color(0.168627, 0, 0.909804, 1)
+grow_begin = -15.0
+thickness = 27
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_dwps7"]
+color = Color(0.168627, 0, 0.909804, 1)
+grow_begin = -15.0
+thickness = 27
 
 [sub_resource type="GDScript" id="GDScript_h8215"]
 script/source = "extends Window
@@ -120,7 +140,6 @@ shape = SubResource("RectangleShape2D_jt12g")
 mode = 4
 initial_position = 2
 size = Vector2i(2000, 1200)
-visible = false
 theme = ExtResource("3_h8215")
 script = ExtResource("5_jt12g")
 
@@ -166,9 +185,12 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ColorRect" type="ColorRect" parent="Pytanie"]
-visible = false
+z_index = -1
+custom_minimum_size = Vector2(2000, 1200)
 offset_right = 2000.0
 offset_bottom = 1200.0
+mouse_filter = 2
+color = Color(0.137255, 1, 1, 1)
 
 [node name="Start" type="Window" parent="."]
 mode = 4
@@ -182,10 +204,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -100.0
-offset_top = -34.0
-offset_right = 100.0
-offset_bottom = 34.0
+offset_left = -200.0
+offset_top = -212.0
+offset_right = 200.0
+offset_bottom = 320.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_h8215")
@@ -194,23 +216,31 @@ alignment = 1
 [node name="Start" type="Button" parent="Start/VBoxContainer"]
 custom_minimum_size = Vector2(400, 100)
 layout_mode = 2
+size_flags_vertical = 3
 theme = ExtResource("3_h8215")
 
 [node name="Level" type="OptionButton" parent="Start/VBoxContainer"]
 custom_minimum_size = Vector2(400, 100)
 layout_mode = 2
+size_flags_vertical = 3
 theme = ExtResource("3_h8215")
 alignment = 1
 
 [node name="Topic" type="OptionButton" parent="Start/VBoxContainer"]
 custom_minimum_size = Vector2(400, 100)
 layout_mode = 2
+size_flags_vertical = 3
 theme = ExtResource("3_h8215")
 alignment = 1
+
+[node name="Settings" type="Button" parent="Start/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 
 [node name="Quit" type="Button" parent="Start/VBoxContainer"]
 custom_minimum_size = Vector2(400, 100)
 layout_mode = 2
+size_flags_vertical = 3
 theme = ExtResource("3_h8215")
 
 [node name="ColorRect" type="ColorRect" parent="Start"]
@@ -218,6 +248,86 @@ z_index = -1
 custom_minimum_size = Vector2(2000, 1200)
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
+color = Color(0.137255, 1, 1, 1)
+
+[node name="Settings" type="Window" parent="."]
+mode = 4
+initial_position = 2
+size = Vector2i(2000, 1200)
+script = ExtResource("8_dwps7")
+
+[node name="Label" type="Label" parent="Settings"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -411.5
+offset_top = -522.0
+offset_right = 411.5
+offset_bottom = -182.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.168627, 0, 0.909804, 1)
+theme_override_font_sizes/font_size = 120
+text = "Dźwięk"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Settings"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -705.5
+offset_top = -56.0
+offset_right = 705.5
+offset_bottom = 132.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Settings/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.168627, 0, 0.909804, 1)
+theme_override_font_sizes/font_size = 60
+text = "Głośność muzyki"
+
+[node name="music control" type="HSlider" parent="Settings/VBoxContainer"]
+layout_mode = 2
+theme_override_icons/grabber = ExtResource("8_gc71u")
+theme_override_icons/grabber_highlight = ExtResource("8_gc71u")
+theme_override_icons/grabber_disabled = ExtResource("8_gc71u")
+theme_override_styles/slider = SubResource("StyleBoxLine_llcym")
+theme_override_styles/grabber_area = SubResource("StyleBoxLine_bkvsw")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_dwps7")
+max_value = 1.0
+step = 0.01
+value = 0.3
+script = ExtResource("10_lb4fb")
+bus_name = "Music"
+
+[node name="Return" type="Button" parent="Settings"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -170.0
+offset_top = 383.0
+offset_right = 171.0
+offset_bottom = 530.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 60
+text = "Powrót"
+
+[node name="ColorRect2" type="ColorRect" parent="Settings"]
+z_index = -1
+custom_minimum_size = Vector2(2000, 1200)
+offset_right = 2000.0
+offset_bottom = 1200.0
 mouse_filter = 2
 color = Color(0.137255, 1, 1, 1)
 
@@ -276,6 +386,11 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 60
 text = "Zagraj jeszcze raz"
 
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_f8ouj")
+autoplay = true
+bus = &"Music"
+
 [connection signal="play_again" from="." to="Player" method="_on_gra_rybka_play_again"]
 [connection signal="stop" from="." to="Player" method="_on_gra_rybka_stop"]
 [connection signal="body_entered" from="Muszle/muszla" to="." method="_on_pearl_collection"]
@@ -294,5 +409,8 @@ text = "Zagraj jeszcze raz"
 [connection signal="pressed" from="Pytanie/Button4" to="Pytanie" method="_on_button_4_pressed"]
 [connection signal="pressed" from="Start/VBoxContainer/Start" to="." method="_on_start_pressed"]
 [connection signal="item_selected" from="Start/VBoxContainer/Level" to="Start" method="_on_level_item_selected"]
+[connection signal="pressed" from="Start/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="Start/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="value_changed" from="Settings/VBoxContainer/music control" to="Settings/VBoxContainer/music control" method="_on_value_changed"]
+[connection signal="pressed" from="Settings/Return" to="Settings" method="_on_return_pressed"]
 [connection signal="pressed" from="Przegrana/VBoxContainer/VSplitContainer2/Play_again" to="." method="_on_play_again_pressed"]

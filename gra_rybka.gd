@@ -1,6 +1,7 @@
 extends Node2D
 
 @onready var start_screen = $Start
+@onready var settings_screen = $Settings
 @onready var pytanko = $Pytanie
 @onready var game_over = $Przegrana
 
@@ -10,10 +11,11 @@ signal play_again
 var points = 0
 var HP = 3
 
-#kliknięcie ESC wyłącza grę
+#kliknięcie ESC wyłącza grę >>> może lepiej bedie jak na esc się włączy menu z którego dopiero można wyłączyć gre
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
-		get_tree().quit()
+		start_screen.show()
+		#get_tree().quit()
 
 #losowa generacja labiryntów
 
@@ -121,6 +123,7 @@ func generuj_zadania():
 
 func _ready():
 	start_screen.show()
+	settings_screen.hide()
 	game_over.hide()
 	
 func _on_start_pressed() -> void:
@@ -132,6 +135,10 @@ func _on_start_pressed() -> void:
 	pytanko.hide()
 	$Player/Camera2D/Label.set_text("Punkty: "+str(points)+" HP: "+str(HP))
 	initialized = true
+
+func _on_settings_pressed() -> void:
+	start_screen.hide()
+	settings_screen.show()
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
